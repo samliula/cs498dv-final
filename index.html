@@ -17,7 +17,7 @@ var pack = d3.pack()
     .size([width, height])
     .padding(1.5);
 
-d3.csv("Covid_19_07-25_total.csv", function(d) {
+d3.csv("https://github.com/samliula/cs498dv-final/blob/gh-pages/Covid_19_07-25_total.csv", function(d) {
   d.Total_Cases = +d.Total_Cases;
   if (d.Total_Cases) return d;
 }, function(error, classes) {
