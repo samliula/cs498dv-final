@@ -1,60 +1,60 @@
-﻿State,Population,Total Cases,Total Deaths
-United States,,,
-Alabama,"4,903,185","78,130","1,456"
-Alaska,"731,545","2,339",20
-American Samoa,"55,641",0,0
-Arizona,"7,278,717","160,041","3,286"
-Arkansas,"3,017,804","37,981",399
-California,"39,512,223","446,452","8,408"
-Colorado,"5,758,736","43,771","1,794"
-Connecticut,"3,565,287","48,776","4,413"
-Delaware,"973,764","14,175",579
-Diamond Princess,0,49,0
-District of Columbia,"705,749","11,717",581
-Florida,"21,477,737","414,511","5,777"
-Georgia,"10,617,423","165,188","3,494"
-Grand Princess,0,103,3
-Guam,"164,229",337,5
-Hawaii,"1,415,872","1,620",26
-Idaho,"1,787,065","17,265",144
-Illinois,"12,671,821","171,122","7,589"
-Indiana,"6,732,219","61,520","2,895"
-Iowa,"3,155,070","41,886",826
-Kansas,"2,913,314","25,009",329
-Kentucky,"4,467,673","26,764",696
-Louisiana,"4,648,794","103,734","3,715"
-Maine,"1,344,212","3,790",119
-Maryland,"6,045,680","83,054","3,433"
-Massachusetts,"6,892,503","115,268","8,510"
-Michigan,"9,986,857","85,622","6,400"
-Minnesota,"5,639,632","50,291","1,611"
-Mississippi,"2,976,149","50,981","1,478"
-Missouri,"6,626,371","41,034","1,200"
-Montana,"1,068,778","3,259",46
-Nebraska,"1,934,408","24,395",316
-Nevada,"3,080,156","41,816",732
-New Hampshire,"1,359,711","6,415",409
-New Jersey,"8,882,190","178,858","15,776"
-New Mexico,"2,096,829","18,788",607
-New York,"26,161,672","411,200","32,608"
-North Carolina,"10,488,084","111,421","1,811"
-North Dakota,"762,062","5,736",99
-Northern Mariana Islands,"55,144",40,2
-Ohio,"11,689,100","83,184","3,297"
-Oklahoma,"3,956,971","30,081",496
-Oregon,"4,217,737","16,104",282
-Pennsylvania,"12,801,989","111,115","7,124"
-Puerto Rico,"3,754,939","14,540",201
-Rhode Island,"1,059,361","18,224","1,002"
-South Carolina,"5,148,714","80,008","1,465"
-South Dakota,"884,659","8,305",122
-Tennessee,"6,829,174","90,796",964
-Texas,"28,995,881","390,286","4,990"
-Utah,"3,205,958","37,623",274
-Vermont,"623,989","1,396",56
-Virgin Islands,"107,268",352,7
-Virginia,"8,535,519","83,609","2,075"
-Washington,"7,614,893","51,849","1,494"
-West Virginia,"1,792,147","5,775",103
-Wisconsin,"5,822,434","47,870",891
-Wyoming,"578,759","2,446",25
+﻿State,Total Cases
+United States,
+Alabama,"78,130"
+Alaska,"2,339"
+American Samoa,0
+Arizona,"160,041"
+Arkansas,"37,981"
+California,"446,452"
+Colorado,"43,771"
+Connecticut,"48,776"
+Delaware,"14,175"
+Diamond Princess,49
+District of Columbia,"11,717"
+Florida,"414,511"
+Georgia,"165,188"
+Grand Princess,103
+Guam,337
+Hawaii,"1,620"
+Idaho,"17,265"
+Illinois,"171,122"
+Indiana,"61,520"
+Iowa,"41,886"
+Kansas,"25,009"
+Kentucky,"26,764"
+Louisiana,"103,734"
+Maine,"3,790"
+Maryland,"83,054"
+Massachusetts,"115,268"
+Michigan,"85,622"
+Minnesota,"50,291"
+Mississippi,"50,981"
+Missouri,"41,034"
+Montana,"3,259"
+Nebraska,"24,395"
+Nevada,"41,816"
+New Hampshire,"6,415"
+New Jersey,"178,858"
+New Mexico,"18,788"
+New York,"411,200"
+North Carolina,"111,421"
+North Dakota,"5,736"
+Northern Mariana Islands,40
+Ohio,"83,184"
+Oklahoma,"30,081"
+Oregon,"16,104"
+Pennsylvania,"111,115"
+Puerto Rico,"14,540"
+Rhode Island,"18,224"
+South Carolina,"80,008"
+South Dakota,"8,305"
+Tennessee,"90,796"
+Texas,"390,286"
+Utah,"37,623"
+Vermont,"1,396"
+Virgin Islands,352
+Virginia,"83,609"
+Washington,"51,849"
+West Virginia,"5,775"
+Wisconsin,"47,870"
+Wyoming,"2,446"
