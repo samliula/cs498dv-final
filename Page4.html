@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<meta charset="utf-8">
+<head>
+  <!-- Load in the d3 library -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+div.tooltip {	
+  position: absolute;			
+  text-align: center;			
+  width: 140px;					
+  height: 40px;					
+  padding: 2px;				
+  font: 12px sans-serif;		
+  background: powderblue;	
+  border: 0px;		
+  border-radius: 8px;			
+  pointer-events: none;			
+}
+</style>
+</head>
+    
+<body>
+	<div class="slides">
+					<h2>Tracking The Pandemic: </h2>
+					<h1>Are Coronavirus Cases Rising Or Falling In Your State?</h1>
+					<h3>CS 498 Data Visualization - Final Project</h3>
+					<h3>Xiang Liu (<a href="mailto:xiang14@illinois.edu">xiang14@illinois.edu)</a> </h3>
+		<div style="text-align:left">
+		<p>The following chart displays U.S. or states’ trends in confirmed cases. The curve was smoothed out with a rolling 7 day average. To show if the curve is trending up or down, we compared the short term average (rolling 7 day average) with the long term average (rolling 21 day average), so that if the short term average is higher than long term average, it means it's trending up, and vice versa. The red dot means it's trending up, while the green dot means it's trending down.</p>
+<p>Hover your mouse over to the dots and see the key stats of your state of that day: daily cases and daily deaths.</p>
+<p>You can either view the U.S. trend or an individual state's trend on this chart. To view an individual state, go to one of the other pages and select the state. Or uncheck the state on one of the other pages to view the U.S. trend. <strong>Give it a try</strong>, and see how different it is in different states.</p>
+		</div>
+		<div>
+		<a href="index.html"><button>Back to compare cases</button></a>
+		<a href="Page5.html"><button>Jump to daily deaths trend</button></a>
+		</div>
+		<div style="text-align:left">
+					<h3>1.2 Daily Confirmed Cases Trending</h3>
+					</div>
+		<svg id="firstgraph" width="1000" height="1000" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
+		</div>
+		
+  <script>
+  var margin = {top: 40, right: 20, bottom: 20, left: 50},
+  width = 1000 - margin.left - margin.right,
+  height = 600 - margin.top - margin.bottom;
+  
+  // Parse the Date
+  var parseDate = d3.timeParse("%m/%d/%Y");
+  var formatDate = d3.timeFormat("%m/%d/%Y")
+  
+  if (localStorage.getItem("State") == null) {localStorage.setItem("State", "US");}
+
+  var filters = {};
+  filters['State'] = localStorage.getItem("State");
+  
+  var x = d3.scaleTime().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
+  
+  var pathgenerator = d3.line()
+    .x(function(d) { return x(d.Date); })
+    .y(function(d) { return y(d.Avg7_Cases); });
+       
+  var svg = d3.select("#firstgraph").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+                   
+  var div = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0); 
+	
+   
+  d3.csv("https://raw.githubusercontent.com/samliula/cs498dv-final/gh-pages/Covid_19_07-25_avg7_h.csv").then(function(data) {
+  
+  
+  	data = data.filter(function(row) {
+        // run through all the filters, returning a boolean
+        return ['State'].reduce(function(pass, column) {
+            return pass && (
+                // pass if no filter is set
+                !filters[column] ||
+                    // pass if the row's value is equal to the filter
+                    // (i.e. the filter is set to a string)
+                    row[column] === filters[column] ||
+                    // pass if the row's value is in an array of filter values
+                    filters[column].indexOf(row[column]) >= 0
+                );
+        }, true);
+    });
+
+	console.log(data);
+
+
+  // format the data
+  data.forEach(function(d) {
+	  d.Date = parseDate(d.Date);
+      d.Avg7_Cases = +d.Avg7_Cases;
+	  d.Daily_Cases = +d.Daily_Cases;
+      d.Daily_Deaths = +d.Daily_Deaths;
+      d.MACD_Cases = +d.MACD_Cases;
+  });
+  
+
+  // Scale the range of the data
+  var minDate = d3.min(data, function(d) {return d.Date; });
+  var maxDate = d3.max(data, function(d) { return d.Date; });
+  
+  x.domain([minDate, maxDate]);
+  y.domain([0, d3.max(data, function(d) { return d.Avg7_Cases; })]);
+
+
+  // Add the path.
+  svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .attr("d", pathgenerator)
+      .style("fill", "none")
+      .style("stroke", "black");
+      
+  //Insert Circles
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("r", 6)
+    .attr("cx", function(d){return x(d.Date);})
+    .attr("cy", function(d){return y(d.Avg7_Cases);})
+    .style("fill", function(d) {
+      if(d.MACD_Cases <= 0) {
+          return "green";       
+      }
+      return "red";
+    })
+    .on("mouseover", function(d) {		
+      div.style("opacity", .9);		
+      div.html(formatDate(d.Date)
+      + "</br>" + "Daily_Cases: " + d.Daily_Cases
+      + "</br>" + "Daily_Deaths: " + d.Daily_Deaths)	
+      .style("left", (d3.event.pageX) + "px")		
+      .style("top", (d3.event.pageY - 28) + "px");	
+      })					
+    .on("mouseout", function(d) {		
+      div.style("opacity", 0);	
+    });
+
+  var formatxAxis = d3.timeFormat("%y-%b-%d");    
+  // Add the X Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).tickFormat(formatxAxis));
+
+  // Add the Y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
+
+  svg.append("text")
+      .data(data)
+	  .attr("class", "title")
+	  .attr("font-family", "sans-serif")
+	  .attr("font-size", "20px")
+      .attr("x", width/2)
+      .attr("y", 0 - (margin.top / 2))
+      .attr("text-anchor", "middle")
+      .text(function(d){ return d.State;});
+  }); //End CSV
+    
+  </script>
+</body>
+</html>

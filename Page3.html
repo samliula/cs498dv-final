@@ -7,26 +7,21 @@
 					<h3>CS 498 Data Visualization - Final Project</h3>
 					<h3>Xiang Liu (<a href="mailto:xiang14@illinois.edu">xiang14@illinois.edu)</a> </h3>
 					<div style="text-align:left">
-					<p>More than <strong>4 million</strong> people in the U.S. have tested positive for the coronavirus and more than <strong>150,000</strong> have died. Though growth in new cases slowed in late spring, by mid-June new cases began to trend upward nationally.</p>
-
-<p>In the graphics below, we are using the data from <a href="https://github.com/CSSEGISandData/COVID-19"> Johns Hopkins University </a> till July 25th, 2020. Compare your state with other states on total confirmed cases. The bigger the circle is, the more confirmed cases in the state. Although New York was in the worst situation at the beginning, California and Florida have now passed New York and became the states which have the most confirmed cases in the U.S.. Texas is also concerning. <strong>How is your state comparing to these states?</strong></p>
-
-<p>Hover your mouse over to the circle and see the key stats of your state: total cases, total deaths, and deaths per million population.</p>
-<p>You can also click and select your state and go to the other pages to discover more details.</p>
+					<p>Death rate is calculated as the number of deaths per million population in the state. It's similar to deaths, but would give a different view of the numbers. New York, for example, has high population therefore has lower death rate than New Jersey for example. California, Florida, Taxes are all much lower because of the same reason. At the same time, you can see Louisiana popped up. <strong>How is your state comparing to these states?</strong></p>
+					<p>Continue to the next page and discover the daily trends.<p>
 					</div>
 					<div>
-					<a href="Page2.html"><button>Continue to compare deaths</button></a>
-					<a href="Page4.html"><button>Jump to daily cases trend</button></a>
+					<a href="Page2.html"><button>Back to compare deaths</button></a>
+					<a href="Page5.html"><button>Continue to daily deaths trend</button></a>
 					</div>
-<div style="text-align:left">
-					<h3>1.1 Total Confirmed Cases Comparison</h3>
+					<div style="text-align:left">
+					<h3>2.2 Death Rate (deaths per million population) Comparison</h3>
 					</div>
-					<div>
-					<svg id="firstgraph" width="1000" height="1000" font-family="sans-serif" font-size="10" text-anchor="middle"></svg></div>
+					<svg id="firstgraph" width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
 		</div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-  
+
 if (localStorage.getItem("State") == null) {localStorage.setItem("State", "US");}
 
 var svg = d3.select("#firstgraph"),
@@ -44,13 +39,13 @@ var pack = d3.pack()
     .padding(1.5);
 
 data1 = d3.csv("https://raw.githubusercontent.com/samliula/cs498dv-final/gh-pages/Covid_19_07-25_total_h.csv", function(d) {
-  d.Total_Cases = +d.Total_Cases;
-  if (d.Total_Cases) return d;
+  d.Deaths_per_Million = +d.Deaths_per_Million;
+  if (d.Deaths_per_Million) return d;
 }, function(error, classes) {
   if (error) throw error;
 
   var root = d3.hierarchy({children: classes})
-      .sum(function(d) { return d.Total_Cases; })
+      .sum(function(d) { return d.Deaths_per_Million; })
       .each(function(d) {
         if (State = d.data.State) {
           var State, i = State.lastIndexOf(".");
@@ -66,14 +61,15 @@ data1 = d3.csv("https://raw.githubusercontent.com/samliula/cs498dv-final/gh-page
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-  var currentColor = "SteelBlue";
+  var currentColor = "Olive";
     
   node.append("circle")
       .attr("class", "allCircles")
       .attr("State", function(d) { return d.State; })
       .attr("r", function(d) { return d.r; })
       .style("fill", function(d) {
-		if (localStorage.getItem("State") == d.class) {currentColor = "red";} else {currentColor = "SteelBlue";}
+		console.log(localStorage.getItem("State"));
+		if (localStorage.getItem("State") == d.class) {currentColor = "red";} else {currentColor = "Olive";}
 		return currentColor;
 	  })
 	  .on("mouseover", function(d) {
@@ -81,8 +77,8 @@ data1 = d3.csv("https://raw.githubusercontent.com/samliula/cs498dv-final/gh-page
 	   })
 	  .on("click", function(d) {
 		localStorage.setItem("State",d.class);
-		currentColor = currentColor == "SteelBlue" ? "red" : "SteelBlue";
-		d3.selectAll('.allCircles').style("fill", "SteelBlue");
+		currentColor = currentColor == "Olive" ? "red" : "Olive";
+		d3.selectAll('.allCircles').style("fill", "Olive");
         d3.select(this).style("fill", currentColor);
 		if (currentColor == "red") {localStorage.setItem("State",d.class);} else {localStorage.setItem("State","US");}
 		console.log(localStorage.getItem("State"));
@@ -108,9 +104,7 @@ data1 = d3.csv("https://raw.githubusercontent.com/samliula/cs498dv-final/gh-page
   node.append("title")
       .text(function(d) { return d.class + "\nTotal Cases: " + format(d.data.Total_Cases) + "\nTotal Deaths: " + format(d.data.Total_Deaths
 ) + "\nDeaths per Million: " + format(d.data.Deaths_per_Million); });
-
 });
-
 </script>
 </body>
 </html>
